@@ -1,0 +1,13 @@
+.found-box{
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+  color: #C3C6C9;
+}
+.found-info{
+  background-color: #F4F4F4;
+  height: 2em;
+  padding: .3em 1em;
+  border-radius: 5px;
+  cursor: text;
+}

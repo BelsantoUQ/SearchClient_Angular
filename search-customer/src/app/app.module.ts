@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CustomerInputComponent } from './modules/customer-input/customer-input.component';
 import { CustomerSummaryComponent } from './modules/customer-summary/customer-summary.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { CustomerSummaryComponent } from './modules/customer-summary/customer-su
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule // agregar FormsModule en el array de imports
   ],
   providers: [],

@@ -1,3 +1,4 @@
+// CustomerInputComponent
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
@@ -12,28 +13,31 @@ export class CustomerInputComponent implements OnInit {
     documentType: '',
     documentNumber: ''
   };
+  customerNotFound = false;
 
-  constructor(private router: Router, private customerService: CustomerService) { }
+  constructor(private router: Router, private customerService: CustomerService) {}
 
-  ngOnInit(): void {
-  }
-
-  customerNotFound = false; // se añade esta propiedad para controlar si el cliente no se encuentra
+  ngOnInit(): void {}
 
   onSubmit() {
     const { documentType, documentNumber } = this.formData;
-    this.customerService.getCustomerByDocument(documentType, documentNumber).subscribe(
-      (customer) => {
-        if (customer) {
-          this.router.navigate(['/customer-summary', customer.id]);
-        } else {
-          this.customerNotFound = true; // Activa el indicador de cliente no encontrado
+    if (this.isFormValid()) {
+      this.customerService.getCustomerByDocument(documentType, documentNumber).subscribe(
+        (customer) => {
+          if (customer) {
+            console.log('Respuesta del servidor: ', customer);
+            this.router.navigate(['/customer-summary', documentNumber, documentType]);
+          } else {
+            console.log('El servidor ha respondido, pero no se encontró ningún cliente.');
+            this.customerNotFound = true;
+          }
+        },
+        (error) => {
+          console.error('Error al obtener el cliente: ', error);
+          this.customerNotFound = true;
         }
-      },
-      (error) => {
-        console.error('Error al obtener el cliente: ', error);
-      }
-    );
+      );
+    }
   }
 
   isFormValid() {

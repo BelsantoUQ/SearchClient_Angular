@@ -1,7 +1,8 @@
+// CustomerSummaryComponent
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
-import { Customer } from 'src/app/models/customer.model'; // Importa la clase Customer
+import { Customer } from 'src/app/models/customer.model';
 
 @Component({
   selector: 'app-customer-summary',
@@ -9,7 +10,7 @@ import { Customer } from 'src/app/models/customer.model'; // Importa la clase Cu
   styleUrls: ['./customer-summary.component.css']
 })
 export class CustomerSummaryComponent implements OnInit {
-  customerInfo: Customer | undefined; // usar la clase Customer
+  customerInfo: Customer | undefined;
 
   constructor(
     private router: Router,
@@ -19,18 +20,26 @@ export class CustomerSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const customerId = +params['id']; // Convierte el parámetro a un número
-      this.customerService.getCustomerById(customerId).subscribe(customer => {
-        if (customer) {
-          this.customerInfo = customer;
-        } else {
-          // Manejar el caso cuando no se encuentra el cliente
+      const customerId = +params['id'];
+      const idType = params['type'];
+      console.log("TIPO ID ------>"+idType);
+      this.customerService.getCustomerByDocument(idType+"", customerId+"").subscribe(
+        (customer) => {
+          if (customer) {
+            console.log('Respuesta del servidor: ', customer);
+            this.customerInfo = customer;
+          } else {
+            console.log('El servidor ha respondido, pero no se encontró ningún cliente.');
+          }
+        },
+        (error) => {
+          console.error('Error al obtener el cliente: ', error);
         }
-      });
+      );
     });
   }
 
   goBack() {
-    this.router.navigate(['/customer-input']); // Navegar de regreso a la página de entrada del cliente
+    this.router.navigate(['/customer-input']);
   }
 }

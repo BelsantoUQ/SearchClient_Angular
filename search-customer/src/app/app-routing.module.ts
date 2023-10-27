@@ -1,3 +1,4 @@
+// app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CustomerInputComponent } from './modules/customer-input/customer-input.component';
@@ -6,7 +7,7 @@ import { CustomerSummaryComponent } from './modules/customer-summary/customer-su
 const routes: Routes = [
   { path: '', redirectTo: 'customer-input', pathMatch: 'full' },
   { path: 'customer-input', component: CustomerInputComponent },
-  { path: 'customer-summary/:id', component: CustomerSummaryComponent }, // Asegúrate de incluir el parámetro de ID en la ruta
+  { path: 'customer-summary/:id/:type', component: CustomerSummaryComponent }, // Incluye el parámetro de type en la ruta
 ];
 
 @NgModule({
